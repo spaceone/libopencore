@@ -146,7 +146,7 @@ import re
 _cookie_domain_re = re.compile(r'(domain="?)([a-z0-9._-]*)("?)', re.I)
 from lxml.html import document_fromstring, tostring
 import urlparse
-from Cookie import Cookie
+from Cookie import SimpleCookie
 
 def rewrite_links(request, response,
                   proxied_base, orig_base,
@@ -215,7 +215,7 @@ def rewrite_links(request, response,
                     return match.group(0)
             cook = _cookie_domain_re.sub(rewrite_domain, cook)
             
-            _cook = Cookie(cook)
+            _cook = SimpleCookie(cook)
             assert len(_cook.keys()) == 1
             for key in _cook.keys():
                 _morsel = _cook[key]
